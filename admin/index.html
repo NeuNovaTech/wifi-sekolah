@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1c49" />
+    <title>Masuk Admin — SMK Negeri 1 Susukan</title>
+    <link rel="stylesheet" href="src/styles/admin.css?v=5">
+    <link rel="stylesheet" href="src/styles/login.css?v=4">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+</head>
+
+<body class="halaman-admin halaman-login">
+    <div class="login-shell">
+        <aside class="login-brand-panel" aria-label="Tentang panel admin">
+            <span class="login-orb login-orb--satu" aria-hidden="true"></span>
+            <span class="login-orb login-orb--dua" aria-hidden="true"></span>
+
+            <div class="login-brand-top">
+                <span class="login-logo">
+                    <img src="../assets/images/logo_sekolah.png" alt="Logo SMK Negeri 1 Susukan">
+                </span>
+                <div>
+                    <b>SMK Negeri 1 Susukan</b>
+                    <small>Panel Admin &middot; Sistem Akses WiFi Terpadu</small>
+                </div>
+            </div>
+
+            <div class="login-brand-copy">
+                <span class="login-eyebrow">Panel Admin</span>
+                <h2>Kelola akses WiFi sekolah dalam satu panel.</h2>
+                <p>Setujui pendaftaran siswa, tangani keluhan, dan pantau kondisi jaringan tanpa berpindah aplikasi.</p>
+
+                <div class="login-jurusan" aria-label="Jurusan">
+                    <span title="Teknik Ototronik"><i class="bi bi-gear"></i> TO</span>
+                    <span title="Teknik Jaringan Komputer dan Telekomunikasi"><i class="bi bi-hdd-network"></i> TJKT</span>
+                    <span title="Desain Interior dan Teknik Furnitur"><i class="bi bi-palette"></i> DITF</span>
+                    <span title="Kriya Kreatif Batik dan Tekstil"><i class="bi bi-flower1"></i> KKBT</span>
+                </div>
+            </div>
+
+            <ul class="login-fitur">
+                <li>
+                    <span class="login-fitur-ikon"><i class="bi bi-people"></i></span>
+                    <div>
+                        <b>Data siswa</b>
+                        <small>Verifikasi akun dan kelas</small>
+                    </div>
+                </li>
+                <li>
+                    <span class="login-fitur-ikon"><i class="bi bi-headset"></i></span>
+                    <div>
+                        <b>Keluhan WiFi</b>
+                        <small>Antrean tiket operator</small>
+                    </div>
+                </li>
+                <li>
+                    <span class="login-fitur-ikon"><i class="bi bi-router"></i></span>
+                    <div>
+                        <b>Monitoring jaringan</b>
+                        <small>Status access point dan VLAN</small>
+                    </div>
+                </li>
+            </ul>
+
+            <p class="login-brand-foot">Hanya untuk operator sekolah &middot; &copy; 2026 Tim IT Sekolah</p>
+        </aside>
+
+        <main class="login-panel">
+            <section class="login-card">
+                <div class="login-head">
+                    <span class="login-eyebrow login-eyebrow--dark">Area terbatas</span>
+                    <h1>Masuk ke Panel Admin</h1>
+                    <p>Gunakan ID admin dan kata sandi yang terdaftar.</p>
+                </div>
+
+                <div id="login-alert" class="login-alert" role="alert" aria-live="polite"></div>
+
+                <form id="form-admin-login" novalidate>
+                    <div class="login-field">
+                        <label for="nipd">ID Admin / Username</label>
+                        <div class="login-input">
+                            <i class="bi bi-person-badge"></i>
+                            <input type="text" id="nipd" name="nipd" placeholder="Contoh: admin"
+                                autocomplete="username" autocapitalize="none" spellcheck="false" required>
+                        </div>
+                    </div>
+
+                    <div class="login-field">
+                        <label for="sandi">Kata Sandi</label>
+                        <div class="login-input">
+                            <i class="bi bi-lock"></i>
+                            <input type="password" id="sandi" name="sandi" placeholder="Kata sandi admin"
+                                autocomplete="current-password" required>
+                            <button type="button" id="lihat-sandi" class="toggle" aria-label="Tampilkan kata sandi">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="tombol-masuk" class="login-submit">
+                        <span>Masuk</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </form>
+
+                <div class="login-note">
+                    <i class="bi bi-shield-lock"></i>
+                    <span>Akun operator hanya diberikan oleh Tim IT sekolah. Lupa kata sandi? Hubungi admin.</span>
+                </div>
+
+                <p class="login-foot">
+                    <a href="../user/index.html"><i class="bi bi-arrow-left"></i> Kembali ke halaman siswa</a>
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="src/scripts/login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a186e">
+    <meta name="description" content="Beranda akses WiFi siswa SMK Negeri 1 Susukan — cek perangkat, sesi, dan kirim keluhan.">
+    <meta name="api-base" content="/api/">
+    <title>Beranda — SMK Negeri 1 Susukan</title>
+    <link rel="stylesheet" href="src/styles/beranda.css?v=15">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+    <script src="../assets/js/api.js?v=14"></script>
+    <script src="src/scripts/user-guard.js?v=14"></script>
+</head>
+<body class="halaman-beranda">
+
+    <header class="topbar">
+        <div class="identitas">
+            <img src="../assets/images/logo_sekolah.png" alt="logo sekolah">
+            <div>
+                <h1>SMK Negeri 1 Susukan</h1>
+                <small>Sistem Akses WiFi Siswa Terpadu</small>
+            </div>
+        </div>
+        <div class="tombol-atas">
+            <a class="tombol-operator" href="keluhan.html" title="Kirim Keluhan" aria-label="Kirim keluhan"><i class="bi bi-headset"></i></a>
+            <button id="bantuan" title="Bantuan" aria-label="Bantuan"><i class="bi bi-question-circle"></i></button>
+            <button id="keluar" class="tombol-keluar" title="Keluar" aria-label="Keluar"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+    </header>
+
+    <main class="konten">
+
+        <section class="hero">
+            <div class="bio">
+                <span class="avatar"><i class="bi bi-person-fill"></i></span>
+                <div>
+                    <b id="nama-siswa">Memuat…</b>
+                    <small><span class="titik"></span> <span id="status-siswa">Memeriksa akun…</span></small>
+                </div>
+            </div>
+            <div class="sesi">
+                <small>Lama sesi</small>
+                <b id="sesi-aktif">00:00:00</b>
+            </div>
+        </section>
+
+        <section class="grid-stat">
+            <div class="stat">
+                <div class="stat-head"><span class="stat-ikon"><i class="bi bi-phone"></i></span><small>Perangkat</small></div>
+                <b id="stat-perangkat">0</b>
+                <span class="sub" id="sub-perangkat">terdaftar</span>
+            </div>
+            <div class="stat ok">
+                <div class="stat-head"><span class="stat-ikon"><i class="bi bi-patch-check"></i></span><small>Status Akun</small></div>
+                <b id="stat-status">—</b>
+                <span class="sub" id="sub-status">memuat</span>
+            </div>
+            <div class="stat warn">
+                <div class="stat-head"><span class="stat-ikon"><i class="bi bi-life-preserver"></i></span><small>Tiket Terbuka</small></div>
+                <b id="stat-tiket">0</b>
+                <span class="sub"><a href="riwayat.html">riwayat tiket</a></span>
+            </div>
+            <div class="stat">
+                <div class="stat-head"><span class="stat-ikon"><i class="bi bi-inbox"></i></span><small>Total Tiket</small></div>
+                <b id="stat-total-tiket">0</b>
+                <span class="sub">semua laporan</span>
+            </div>
+        </section>
+
+        <div class="grid-utama">
+            <div class="kolom">
+                <section class="kartu kartu-siswa">
+                    <div class="kartu-head"><b><i class="bi bi-person-vcard"></i>Data Siswa</b><span class="lencana" id="lencana-akun">Memuat</span></div>
+                    <div class="detail-siswa">
+                        <p><span>NIPD</span><b id="data-nipd">—</b></p>
+                        <p><span>No HP</span><span class="sel"><b id="nilai-nohp">—</b><button type="button" class="btn-mata" data-target="nilai-nohp" title="Lihat atau sembunyikan nomor HP" aria-label="Lihat atau sembunyikan nomor HP"><i class="bi bi-eye"></i></button></span></p>
+                        <p><span>Kelas</span><b id="data-kelas">—</b></p>
+                        <p><span>Jurusan</span><b id="data-jurusan">—</b></p>
+                        <p><span>VLAN</span><b id="data-vlan">—</b></p>
+                        <p><span>Status</span><b class="hijau" id="data-status">—</b></p>
+                    </div>
+                </section>
+
+                <section class="kartu kartu-aktivitas">
+                    <div class="kartu-head"><b><i class="bi bi-clock-history"></i>Aktivitas Akun</b><span class="badge">terbaru</span></div>
+                    <div id="daftar-aktivitas" class="aktivitas-list">
+                        <div class="kosong">Memuat aktivitas…</div>
+                    </div>
+                </section>
+
+                <section class="kartu kartu-layanan">
+                    <div class="kartu-head"><b><i class="bi bi-hdd-network"></i>Status Layanan</b><span class="badge" id="status-layanan">Memeriksa…</span></div>
+                    <div class="detail-siswa">
+                        <p><span>Uptime server</span><b id="uptime-server">—</b></p>
+                        <p><span>Pemeriksaan terakhir</span><b id="cek-terakhir">—</b></p>
+                        <p><span>Integrasi perangkat WiFi</span><b id="status-integrasi">Belum terhubung</b></p>
+                    </div>
+                    <div class="catatan-integrasi">
+                        <i class="bi bi-info-circle"></i>
+                        <span>Data AP, VLAN, dan jumlah perangkat online baru bisa tampil setelah server WiFi/router terhubung.</span>
+                    </div>
+                </section>
+            </div>
+
+            <div class="kolom">
+                <section class="kartu kartu-perangkat">
+                    <div class="kartu-head"><b><i class="bi bi-phone"></i>Data Perangkat</b><span class="badge" id="badge-perangkat">0 HP</span></div>
+                    <div id="daftar-perangkat" class="perangkat-list">
+                        <div class="kosong">Memuat perangkat…</div>
+                    </div>
+                    <p id="pesan-perangkat-utama" class="pesan"></p>
+                    <div class="wifi-box" id="kotak-wifi" hidden>
+                        <div>
+                            <small>SSID Wifi Sekolah</small>
+                            <b id="ssid-wifi">—</b>
+                        </div>
+                        <div>
+                            <small>Kata Sandi</small>
+                            <span class="sel">
+                                <b id="nilai-pwifi">••••••••</b>
+                                <button type="button" class="btn-mata" id="lihat-pwifi" title="Lihat atau sembunyikan kata sandi WiFi" aria-label="Lihat atau sembunyikan kata sandi WiFi"><i class="bi bi-eye"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="baris-aksi">
+                        <button type="button" id="tambah-perangkat" class="tombol-kecil"><i class="bi bi-plus-lg"></i> Tambah Perangkat</button>
+                    </div>
+                </section>
+
+                <section class="kartu cek-sinyal kartu-tes">
+                    <div class="kartu-head"><b><i class="bi bi-speedometer2"></i>Tes Koneksi</b><span class="lencana" id="status-ujisinyal">Belum diuji</span></div>
+                    <div class="tes-uji">
+                        <div>
+                            <small>Latensi server</small>
+                            <b><span id="angka-ujisinyal">—</span> <small>ms</small></b>
+                        </div>
+                        <div>
+                            <small>Status server</small>
+                            <b id="ping-ujisinyal">—</b>
+                        </div>
+                        <div>
+                            <small>Waktu uji</small>
+                            <b id="waktu-uji">—</b>
+                        </div>
+                    </div>
+                    <p id="ket-ujisinyal">Tes ini mengukur koneksi kamu ke server aplikasi sekolah, bukan kecepatan WiFi.</p>
+                    <div class="baris-aksi">
+                        <button type="button" id="tombol-ujisinyal" class="tombol-kecil"><i class="bi bi-activity"></i> Tes Sekarang</button>
+                    </div>
+                    <div class="catatan-integrasi">
+                        <i class="bi bi-info-circle"></i>
+                        <span>Kecepatan unduh, sinyal (dBm), dan ping WiFi asli butuh integrasi dengan perangkat jaringan sekolah.</span>
+                    </div>
+                </section>
+
+                <section class="kartu tiket kartu-tiket">
+                    <div class="kartu-head"><b><i class="bi bi-inbox"></i>Tiket Keluhan</b><a href="riwayat.html">Lihat semua</a></div>
+                    <p id="info-tiket">Belum ada tiket. WiFi lemot atau sering putus? Kirim keluhan lewat ikon headset di atas ya.</p>
+                </section>
+            </div>
+        </div>
+
+        <section class="kartu akun-aksi">
+            <div class="kartu-head"><b><i class="bi bi-shield-lock"></i>Pengaturan Akun</b><span class="badge"><i class="bi bi-shield-check"></i>aman</span></div>
+            <p>Ubah nomor HP atau kata sandimu sendiri. Data tersimpan di server sekolah, bukan di HP.</p>
+            <div class="baris-aksi">
+                <button type="button" id="ganti-nohp" class="tombol-kecil"><i class="bi bi-telephone"></i> Ganti No HP</button>
+                <button type="button" id="ganti-sandi" class="tombol-kecil ghost"><i class="bi bi-key"></i> Ganti Kata Sandi</button>
+            </div>
+        </section>
+
+        <footer class="kaki-beranda">
+            <p>&copy; 2026 Tim IT Sekolah Amar, Yusuf & Noval</p>
+        </footer>
+    </main>
+
+    <div id="bantuan-box" role="dialog" aria-label="Bantuan" hidden>
+        <div class="bantuan-head">
+            <b>Butuh bantuan?</b>
+            <button id="tutup-bantuan" class="tutup-bantuan" title="Tutup" aria-label="Tutup bantuan"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <ol class="panduan">
+            <li>Masuk memakai NIPD dan kata sandi akunmu.</li>
+            <li>Daftarkan perangkat lewat tombol <b>Tambah Perangkat</b>.</li>
+            <li>WiFi bermasalah? Klik ikon headset di pojok kanan atas.</li>
+        </ol>
+        <p class="catatan-integrasi">
+            <i class="bi bi-info-circle"></i>
+            <span>Halaman ini untuk pendataan akun, perangkat, dan keluhan.
+            Penghubungan ke jaringan WiFi/Internet diatur terpisah oleh admin/Tim IT.</span>
+        </p>
+    </div>
+
+    <div id="kotak-nohp" class="kotak-ubah" role="dialog" aria-label="Ganti nomor HP" hidden>
+        <div class="bantuan-head">
+            <b>Ganti Nomor HP</b>
+            <button id="tutup-nohp" class="tutup-bantuan" title="Tutup" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <label class="label-ubah" for="input-nohp">Nomor HP baru</label>
+        <input type="tel" id="input-nohp" placeholder="Contoh: 0857-4321-1234">
+        <p id="pesan-nohp" class="pesan"></p>
+        <button type="button" id="simpan-nohp" class="tombol-kecil penuh">Simpan No HP</button>
+    </div>
+
+    <div id="kotak-sandi" class="kotak-ubah" role="dialog" aria-label="Ganti kata sandi" hidden>
+        <div class="bantuan-head">
+            <b>Ganti Kata Sandi</b>
+            <button id="tutup-sandi" class="tutup-bantuan" title="Tutup" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <label class="label-ubah" for="input-sandi">Kata sandi baru</label>
+        <input type="password" id="input-sandi" placeholder="Minimal 6 karakter">
+        <label class="label-ubah" for="input-sandi2">Ulangi kata sandi baru</label>
+        <input type="password" id="input-sandi2" placeholder="Ulangi sama persis">
+        <p id="pesan-sandi" class="pesan"></p>
+        <button type="button" id="simpan-sandi" class="tombol-kecil penuh">Simpan Sandi</button>
+    </div>
+
+    <div id="kotak-perangkat" class="kotak-ubah" role="dialog" aria-label="Tambah perangkat" hidden>
+        <div class="bantuan-head">
+            <b>Tambah Perangkat</b>
+            <button id="tutup-perangkat" class="tutup-bantuan" title="Tutup" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <label class="label-ubah" for="input-nama-perangkat">Nama perangkat</label>
+        <input type="text" id="input-nama-perangkat" placeholder="Contoh: Vivo Y22" maxlength="60">
+        <label class="label-ubah" for="input-tipe-perangkat">Tipe / sistem operasi (opsional)</label>
+        <input type="text" id="input-tipe-perangkat" placeholder="Contoh: Android 13, 5 GHz" maxlength="80">
+        <label class="label-ubah" for="input-mac-perangkat">Alamat MAC</label>
+        <input type="text" id="input-mac-perangkat" placeholder="Contoh: 8A:3F:1C:9D:44:02" maxlength="17" autocapitalize="characters">
+        <label class="label-ubah" for="input-vlan-perangkat">VLAN (opsional)</label>
+        <input type="number" id="input-vlan-perangkat" placeholder="Contoh: 20" min="1" max="4094">
+        <p id="pesan-perangkat" class="pesan"></p>
+        <button type="button" id="simpan-perangkat" class="tombol-kecil penuh">Simpan Perangkat</button>
+        <p class="catatan-integrasi" style="margin-top:10px">
+            <i class="bi bi-info-circle"></i>
+            <span>Maksimal 3 perangkat per akun. Data ini dipakai admin untuk verifikasi; pendaftaran ke jaringan tetap dilakukan admin/Tim IT.</span>
+        </p>
+    </div>
+
+    <script src="src/scripts/main.js?v=14"></script>
+    <script src="src/scripts/beranda.js?v=14"></script>
+</body>
+</html>
