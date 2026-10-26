@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f7fc" />
+    <meta name="api-base" content="/api/">
+    <title>Pengaturan — Panel Admin</title>
+    <link rel="stylesheet" href="src/styles/admin.css?v=4">
+    <script src="../assets/js/api.js"></script>
+    <script src="src/scripts/auth-guard.js"></script>
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+</head>
+
+<body class="halaman-admin">
+    <div class="layout-admin">
+        <aside class="sidebar" aria-label="Navigasi admin">
+            <div class="brand">
+                <img src="../assets/images/logo_sekolah.png" alt="logo sekolah">
+                <div><b>Panel Admin</b><small>WIFI Terpadu</small></div>
+            </div>
+
+            <nav>
+                <a href="dashboard.html">
+                    <i class="bi bi-grid"></i><span>Dashboard</span>
+                </a>
+                <a href="siswa.html">
+                    <i class="bi bi-people"></i><span>Data Siswa</span><em id="nav-siswa">0</em>
+                </a>
+                <a href="monitoring.html">
+                    <i class="bi bi-hdd-network"></i><span>Monitoring</span>
+                </a>
+                <a href="keluhan.html">
+                    <i class="bi bi-headset"></i><span>Keluhan</span><em id="nav-keluhan">0</em>
+                </a>
+                <a href="log.html">
+                    <i class="bi bi-clock-history"></i><span>Log</span>
+                </a>
+                <a class="aktif" href="pengaturan.html">
+                    <i class="bi bi-sliders"></i><span>Pengaturan</span>
+                </a>
+            </nav>
+
+            <a class="keluar" href="index.html">
+                <i class="bi bi-box-arrow-right"></i><span>Keluar</span>
+            </a>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div class="topbar-kiri">
+                    <div>
+                        <h1>Pengaturan</h1>
+                        <small id="ringkas-pengaturan">SSID, sandi WiFi, jam akses, dan kapasitas jaringan</small>
+                    </div>
+                </div>
+
+                <div class="top-aksi">
+                    <button type="button" class="lonceng" id="lonceng" aria-label="Notifikasi">
+                        <i class="bi bi-bell"></i><span id="lonceng-jumlah">0</span>
+                    </button>
+                    <div class="akun">
+                        <span class="avatar"><img src="../assets/images/logo_sekolah.png" alt="Logo Sekolah"></span>
+                        <div><b>Admin</b><small>Operator</small></div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="kartu pengaturan-kartu">
+                <div class="kartu-head">
+                    <div>
+                        <b><i class="bi bi-sliders"></i> Pengaturan WiFi Sekolah</b>
+                        <small>Tersimpan di database aplikasi</small>
+                    </div>
+                </div>
+
+                <form id="form-pengaturan" class="form-pengaturan" novalidate>
+                    <div id="pengaturan-alert" class="notif-pengaturan" hidden></div>
+
+                    <div class="pengaturan-grid">
+                        <div class="bidang">
+                            <label for="wifi_ssid">SSID WiFi Sekolah</label>
+                            <input type="text" id="wifi_ssid" name="wifi_ssid" maxlength="32"
+                                placeholder="WIFI-SMKN1-SUSUKAN" autocomplete="off" required>
+                            <small>Nama jaringan yang tampil di perangkat siswa.</small>
+                        </div>
+
+                        <div class="bidang">
+                            <label for="wifi_password">Kata Sandi WiFi</label>
+                            <div class="pw-field">
+                                <input type="password" id="wifi_password" name="wifi_password" maxlength="63"
+                                    minlength="8" placeholder="Minimal 8 karakter" autocomplete="new-password" required>
+                                <button type="button" id="lihat-sandi" class="lihat-sandi" aria-label="Tampilkan kata sandi">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <small>8–63 karakter. Ditampilkan ke siswa di halaman Beranda.</small>
+                        </div>
+
+                        <div class="bidang">
+                            <label for="jam_akses">Jam Akses</label>
+                            <input type="text" id="jam_akses" name="jam_akses" placeholder="06:00-17:00"
+                                inputmode="numeric" maxlength="11" required>
+                            <small>Format JJ:MM–JJ:MM, contoh 06:00-17:00.</small>
+                        </div>
+
+                        <div class="bidang">
+                            <label for="kapasitas_jaringan">Kapasitas Jaringan (%)</label>
+                            <input type="number" id="kapasitas_jaringan" name="kapasitas_jaringan" min="1" max="100"
+                                step="1" placeholder="55" required>
+                            <small>Batas pemakaian yang ditampilkan pada dashboard.</small>
+                        </div>
+                    </div>
+
+                    <div class="pengaturan-info">
+                        <i class="bi bi-info-circle"></i>
+                        <p>
+                            Perubahan di halaman ini <b>tersimpan di database aplikasi</b>. SSID dan kata sandi baru
+                            benar-benar diterapkan ke jaringan setelah server terhubung ke router/controller WiFi
+                            sekolah. Selama belum terhubung, data ini hanya menjadi acuan admin dan tampilan siswa.
+                        </p>
+                    </div>
+
+                    <div class="pengaturan-aksi">
+                        <button type="submit" class="btn btn--brand" id="simpan-pengaturan">
+                            <i class="bi bi-save"></i> Simpan Pengaturan
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="kartu pengaturan-kartu">
+                <div class="kartu-head">
+                    <div>
+                        <b><i class="bi bi-shield-lock"></i> Keamanan Akun Admin</b>
+                        <small>Ganti kata sandi akun yang sedang dipakai</small>
+                    </div>
+                </div>
+
+                <form id="form-akun" class="form-pengaturan" novalidate>
+                    <div id="akun-alert" class="notif-pengaturan" hidden></div>
+
+                    <div class="pengaturan-grid">
+                        <div class="bidang">
+                            <label for="password_lama">Kata Sandi Lama</label>
+                            <input type="password" id="password_lama" name="password_lama"
+                                autocomplete="current-password" required>
+                        </div>
+
+                        <div class="bidang">
+                            <label for="password_baru">Kata Sandi Baru</label>
+                            <input type="password" id="password_baru" name="password_baru" minlength="8"
+                                maxlength="72" autocomplete="new-password" required>
+                            <small>Minimal 8 karakter.</small>
+                        </div>
+
+                        <div class="bidang">
+                            <label for="password_baru2">Ulangi Kata Sandi Baru</label>
+                            <input type="password" id="password_baru2" name="password_baru2" minlength="8"
+                                maxlength="72" autocomplete="new-password" required>
+                            <small>Harus sama dengan kata sandi baru.</small>
+                        </div>
+                    </div>
+
+                    <div class="pengaturan-info">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <p>
+                            Segera ganti kata sandi bawaan <b>admin123</b> sebelum aplikasi dipakai di server
+                            publik. Kata sandi lama tetap diminta untuk mencegah perubahan oleh orang lain.
+                        </p>
+                    </div>
+
+                    <div class="pengaturan-aksi">
+                        <button type="submit" class="btn btn--brand" id="simpan-akun">
+                            <i class="bi bi-shield-check"></i> Ganti Kata Sandi
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Navigasi bawah">
+        <a href="dashboard.html"><i class="bi bi-grid"></i><small>Dash</small></a>
+        <a href="siswa.html"><i class="bi bi-people"></i><small>Siswa</small></a>
+        <a href="monitoring.html"><i class="bi bi-hdd-network"></i><small>Net</small></a>
+        <a href="keluhan.html"><i class="bi bi-headset"></i><small>Help</small></a>
+        <a href="log.html"><i class="bi bi-clock-history"></i><small>Log</small></a>
+        <a class="aktif" href="pengaturan.html"><i class="bi bi-sliders"></i><small>Atur</small></a>
+    </nav>
+
+    <script src="src/scripts/admin-util.js"></script>
+    <script src="src/scripts/pengaturan.js"></script>
+</body>
+
+</html>

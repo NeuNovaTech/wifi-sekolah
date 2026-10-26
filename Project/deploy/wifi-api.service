@@ -1,0 +1,21 @@
+[Unit]
+Description=API Sistem Akses WiFi SMK Negeri 1 Susukan
+After=network.target mysql.service mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=wifi
+Group=wifi
+WorkingDirectory=/var/www/wifi/api
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/var/www/wifi/api/storage
+
+[Install]
+WantedBy=multi-user.target

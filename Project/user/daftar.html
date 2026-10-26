@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Daftar Wifi — SMK Negeri 1 Susukan</title>
+  <meta name="api-base" content="/api/">
+  <link rel="stylesheet" href="src/styles/main.css" />
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+  <script src="../assets/js/api.js"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="bg-pattern">
+      <i class="bi bi-gear"></i>
+      <i class="bi bi-cpu"></i>
+      <i class="bi bi-hdd-network"></i>
+      <i class="bi bi-laptop"></i>
+      <i class="bi bi-palette"></i>
+      <i class="bi bi-hammer"></i>
+      <i class="bi bi-flower1"></i>
+      <i class="bi bi-heart"></i>
+    </div>
+    <div class="logo">
+      <img src="../assets/images/logo_sekolah.png" alt="logo SMK Negeri 1 Susukan">
+    </div>
+    <h1>SMK Negeri 1 Susukan</h1>
+    <p class="subtitle">"Sistem Akses Wifi Siswa Terpadu"</p>
+    <div class="jurusan">
+      <span title="Teknik Ototronik"><i class="bi bi-gear"></i> TO</span>
+      <span title="Teknik Jaringan Komputer dan Telekomunikasi"><i class="bi bi-hdd-network"></i> TJKT</span>
+      <span title="Desain Interior dan Teknik Furnitur"><i class="bi bi-palette"></i> DITF</span>
+      <span title="Kriya Kreatif Batik dan Tekstil"><i class="bi bi-flower1"></i> KKBT</span>
+    </div>
+  </header>
+
+  <main class="kotak">
+    <section class="kartu">
+      <h2>Pendaftaran Profil Siswa</h2>
+      <aside class="pengumuman">
+        <h3>Pengumuman Untuk Tiap Kelas</h3>
+        <ul>
+          <li>Pastikan memilih kelas yang sesuai agar akses dapat di setujui dengan lancar.</li>
+        </ul>
+      </aside>
+      <form action="#" method="post" id="form-daftar">
+        <div id="daftar-alert" class="notif" hidden></div>
+        <label for="nama">Nama Lengkap Siswa</label>
+        <input type="text" id="nama" name="nama" placeholder="Masukkan Nama Anda..." required>
+        <label for="nipd">NIPD / ID Pengguna</label>
+        <input type="text" id="nipd" name="nipd" placeholder="Contoh: 1234" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Contoh: nama@gmail.com" autocomplete="email"
+          required>
+        <label for="sandi">Kata Sandi</label>
+        <div class="pw-wrap">
+          <input type="password" id="sandi" name="sandi" placeholder="Buat kata sandi min. 6 karakter..." required
+            minlength="6" autocomplete="new-password">
+          <button type="button" id="lihat-sandi"><i class="bi bi-eye"></i></button>
+
+        </div>
+        <div class="baris-kiri">
+          <div class="kolom">
+            <label for="no_hp">Nomer HP</label>
+            <input type="tel" id="no_hp" name="no_hp" placeholder="Contoh: 083*********" inputmode="tel"
+              pattern="[0-9+\- ]{8,20}" autocomplete="tel" required>
+          </div>
+          <div class="kolom">
+            <label for="kelas">Pilih Kelas Anda</label>
+            <div class="pilih">
+              <select name="kelas" id="kelas" required autocomplete="off">
+                <option value="" disabled selected hidden>-- Pilih Kelas --</option>
+                <optgroup label="kelas X">
+                  <option value="X TO 1">X TO 1</option>
+                  <option value="X TO 2">X TO 2</option>
+                  <option value="X TJKT 1">X TJKT 1</option>
+                  <option value="X TJKT 2">X TJKT 2</option>
+                  <option value="X DITF">X DITF</option>
+                  <option value="X KKBT">X KKBT</option>
+                </optgroup>
+                <optgroup label="kelas XI">
+                  <option value="XI TO 1">XI TO 1</option>
+                  <option value="XI TO 2">XI TO 2</option>
+                  <option value="XI TJKT 1">XI TJKT 1</option>
+                  <option value="XI TJKT 2">XI TJKT 2</option>
+                  <option value="XI DITF">XI DITF</option>
+                  <option value="XI KKBT">XI KKBT</option>
+                </optgroup>
+              </select>
+              <i class="bi bi-caret-down-fill"></i>
+            </div>
+          </div>
+        </div>
+        <label class="centang" for="setujui">
+          <input type="checkbox" id="setujui" name="setujui" required>
+          <span>saya setujui <b id="buka-sk">syarat &amp; Ketentuan</b> Pengguna Jaringan Wifi SMK 1 susukan</span>
+        </label>
+        <button type="submit">Daftar Akun WiFi</button>
+      </form>
+      <p style="text-align:center;font-size:12px;color:#6a7a94;margin:10px 0 0;">Akun ini untuk pendataan dan pengelolaan akses WiFi. Penghubungan ke jaringan tetap dilakukan admin/Tim IT.</p>
+      <p style="text-align:center;margin-top:12px;font-size:13px;">Sudah Punya Akun? <a href="index.html">Masuk</a></p>
+    </section>
+  </main>
+  <footer class="footer" id="footer-daftar">
+    <p>&copy; 2026 Tim IT Sekolah Amar &amp; Noval</p>
+  </footer>
+  <div class="bantuan-float">
+    <button id="bantuan" title="Bantuan"><i class="bi bi-question-circle"></i></button>
+    <a class="operator-float" href="keluhan.html" title="Chat Operator"><i class="bi bi-headset"></i></a>
+  </div>
+  <div id="bantuan-box" hidden>
+    <div class="bantuan-head">
+      <b>Butuh bantuan?</b>
+      <button id="tutup-bantuan" class="tutup-bantuan" title="Tutup" aria-label="Tutup bantuan"><i
+          class="bi bi-x-lg"></i></button>
+    </div>
+    <ol class="panduan">
+      <li>Masukkan nama lengkap dan NIPD.</li>
+      <li>Buat kata sandi min. 6 karakter.</li>
+      <li>Pilih kelas lalu klik <b>Daftar Akun WiFi</b>.</li>
+    </ol>
+  </div>
+  <div id="sk-overlay" class="sk-overlay" hidden>
+    <div class="sk-box" role="dialog" aria-modal="true" aria-labelledby="sk-judul">
+      <div class="bantuan-head sk-head">
+        <b id="sk-judul"><i class="bi bi-shield-check"></i> Syarat &amp; Ketentuan</b>
+        <button type="button" id="tutup-sk" class="tutup-bantuan" title="Tutup" aria-label="Tutup">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <p class="sk-sub">Harap baca dengan teliti sebelum menyetujui.</p>
+
+      <div class="sk-isi">
+        <h4>1. Ruang Lingkup</h4>
+        <p>Layanan ini adalah "Sistem Akses WiFi Siswa Terpadu" SMK Negeri 1 Susukan, khusus untuk siswa aktif dari 4 jurusan: TO, TJKT, DITF, dan KKBT, untuk kelas X dan XI.</p>
+
+        <h4>2. Pendaftaran &amp; Persetujuan</h4>
+        <ul>
+          <li>Data wajib diisi: Nama Lengkap, NIPD, Email, No HP, Kelas, dan Kata Sandi.</li>
+          <li>Kelas harus dipilih sesuai kelas asli, misalnya X TJKT 2. Salah memilih kelas dapat membuat pengajuan <b>ditolak</b> admin.</li>
+          <li>Setelah mendaftar, akun berstatus <b>Pending</b> dan menunggu persetujuan admin, yang akan <b>menyetujui</b> atau <b>menolak</b>.</li>
+          <li>Jika ditolak, perbaiki datanya lalu ajukan daftar ulang.</li>
+        </ul>
+
+        <h4>3. Akun &amp; Perangkat</h4>
+        <ul>
+          <li>Satu NIPD hanya untuk satu akun.</li>
+          <li>Setiap akun dihimbau hanya memakai 1 sampai 2 perangkat yang aktif.</li>
+          <li>Sistem mencatat paling banyak 3 perangkat untuk berjaga-jaga. Perangkat keempat dan seterusnya akan ditolak.</li>
+          <li>Penggantian perangkat tidak sah. Bila ingin mengganti perangkat, laporkan ke admin atau Tim IT sekolah.</li>
+        </ul>
+
+        <h4>4. Kata Sandi &amp; Keamanan</h4>
+        <ul>
+          <li>Kata sandi minimal 6 karakter dan wajib dijaga kerahasiaannya.</li>
+          <li>No HP dan kata sandi boleh diganti sendiri lewat menu "Pengaturan Akun" di Beranda.</li>
+          <li>Semua aktivitas yang memakai akunmu menjadi tanggung jawabmu.</li>
+        </ul>
+
+        <h4>5. Jaringan</h4>
+        <ul>
+          <li>Gunakan hanya jaringan resmi WiFi sekolah.</li>
+          <li>Dilarang mengubah IP, alamat MAC, pengaturan jaringan, router, atau perangkat milik sekolah.</li>
+        </ul>
+
+        <h4>6. Pemakaian Wajar</h4>
+        <ul>
+          <li>Kecepatan dibagi rata untuk semua jurusan. Kecepatan yang turun saat jaringan ramai adalah hal normal, bukan kerusakan.</li>
+          <li>Dilarang mengunduh atau mengunggah data besar (misalnya torrent) yang dapat mengganggu siswa lain.</li>
+          <li>Sekolah berhak membatasi jam akses atau kuota bila diperlukan.</li>
+        </ul>
+
+        <h4>7. Hal yang Dilarang</h4>
+        <ul>
+          <li>Mengakses konten ilegal, pornografi, kekerasan, perundungan, atau berita bohong.</li>
+          <li>Meretas, mengganggu, atau merusak sistem dan jaringan sekolah.</li>
+          <li>Menyebarkan spam, virus, atau konten yang merugikan orang lain.</li>
+          <li>Memakai akun orang lain, memperjualbelikan akses, atau memalsukan data seperti NIPD dan kelas.</li>
+        </ul>
+
+        <h4>8. Data &amp; Privasi</h4>
+        <ul>
+          <li>Data yang dikumpulkan: nama, NIPD, email, No HP, kelas, alamat MAC, dan IP.</li>
+          <li>Data akun dan riwayat keluhan disimpan oleh admin sekolah.</li>
+          <li>Alamat MAC dan IP ditampilkan dalam keadaan tersamar. Kamu bisa membukanya lewat ikon mata bila sewaktu-waktu diperlukan.</li>
+          <li>Admin sekolah dapat melihat data untuk verifikasi, keamanan, dan pemantauan jaringan.</li>
+        </ul>
+
+        <h4>9. Keluhan &amp; Bantuan</h4>
+        <ul>
+          <li>Kendala WiFi dapat dilaporkan lewat menu Keluhan pada aplikasi.</li>
+          <li>Setiap laporan tersimpan sebagai tiket berstatus "Menunggu Operator" dan dapat dilihat pada halaman Riwayat.</li>
+        </ul>
+
+        <h4>10. Sanksi Pelanggaran</h4>
+        <p>Pelanggaran dapat berakibat peringatan, pemblokiran akun atau perangkat, hingga laporan kepada pihak sekolah sesuai aturan yang berlaku.</p>
+
+        <h4>11. Perubahan Ketentuan</h4>
+        <p>Tim IT sekolah dapat mengubah ketentuan ini sewaktu-waktu. Perubahan berlaku sejak diumumkan pada halaman ini.</p>
+
+        <h4>12. Kontak</h4>
+        <p>Tim IT Sekolah &mdash; Amar, Yusuf &amp; Noval.</p>
+      </div>
+
+      <div class="sk-aksi" hidden>
+        <button type="button" id="tolak-sk" class="sk-tolak"><i class="bi bi-x-lg"></i> Tolak</button>
+        <button type="button" id="setuju-sk"><i class="bi bi-check-lg"></i> Setuju</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="src/scripts/main.js"></script>
+  <script src="src/scripts/daftar.js"></script>
+</body>
+
+</html>

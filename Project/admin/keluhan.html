@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f7fc" />
+    <meta name="api-base" content="/api/">
+    <title>Keluhan Siswa — Panel Admin</title>
+    <link rel="stylesheet" href="src/styles/admin.css?v=4">
+    <script src="../assets/js/api.js"></script>
+    <script src="src/scripts/auth-guard.js"></script>
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+</head>
+
+<body class="halaman-admin">
+    <div class="layout-admin">
+        <aside class="sidebar" aria-label="Navigasi admin">
+            <div class="brand">
+                <img src="../assets/images/logo_sekolah.png" alt="logo sekolah">
+                <div><b>Panel Admin</b><small>WIFI Terpadu</small></div>
+            </div>
+
+            <nav>
+                <a href="dashboard.html">
+                    <i class="bi bi-grid"></i><span>Dashboard</span>
+                </a>
+                <a href="siswa.html">
+                    <i class="bi bi-people"></i><span>Data Siswa</span><em id="nav-siswa">0</em>
+                </a>
+                <a href="monitoring.html">
+                    <i class="bi bi-hdd-network"></i><span>Monitoring</span>
+                </a>
+                <a class="aktif" href="keluhan.html">
+                    <i class="bi bi-headset"></i><span>Keluhan</span><em id="nav-keluhan">0</em>
+                </a>
+                <a href="log.html">
+                    <i class="bi bi-clock-history"></i><span>Log</span>
+                </a>
+                <a href="pengaturan.html">
+                    <i class="bi bi-sliders"></i><span>Pengaturan</span>
+                </a>
+            </nav>
+
+            <a class="keluar" href="index.html">
+                <i class="bi bi-box-arrow-right"></i><span>Keluar</span>
+            </a>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div class="topbar-kiri">
+                    <div>
+                        <h1>Keluhan Siswa</h1>
+                        <small id="ringkas-keluhan-atas">Memuat ringkasan tiket…</small>
+                    </div>
+                </div>
+
+                <div class="top-aksi">
+                    <label class="cari">
+                        <i class="bi bi-search"></i>
+                        <input id="cari-keluhan" aria-label="Cari tiket atau NIPD" type="search" placeholder="Cari tiket atau NIPD...">
+                    </label>
+                    <button type="button" class="lonceng" id="lonceng" aria-label="Notifikasi">
+                        <i class="bi bi-bell"></i><span id="lonceng-jumlah">0</span>
+                    </button>
+                    <div class="akun">
+                        <span class="avatar"><img src="../assets/images/logo_sekolah.png" alt="Logo Sekolah"></span>
+                        <div><b>Admin</b><small>Operator</small></div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="grid-stat" aria-label="Ringkasan keluhan">
+                <article class="stat">
+                    <div class="stat-head">
+                        <span class="stat-ikon"><i class="bi bi-inbox"></i></span>
+                        <small>Tiket Baru</small>
+                    </div>
+                    <b id="stat-baru">0</b>
+                    <span>menunggu tindakan</span>
+                </article>
+
+                <article class="stat warn">
+                    <div class="stat-head">
+                        <span class="stat-ikon"><i class="bi bi-tools"></i></span>
+                        <small>Diproses</small>
+                    </div>
+                    <b id="stat-diproses">0</b>
+                    <span>sedang ditangani</span>
+                </article>
+
+                <article class="stat ok">
+                    <div class="stat-head">
+                        <span class="stat-ikon"><i class="bi bi-check2-circle"></i></span>
+                        <small>Selesai</small>
+                    </div>
+                    <b id="stat-selesai">0</b>
+                    <span>sudah ditutup</span>
+                </article>
+
+                <article class="stat bad">
+                    <div class="stat-head">
+                        <span class="stat-ikon"><i class="bi bi-x-circle"></i></span>
+                        <small>Ditolak</small>
+                    </div>
+                    <b id="stat-ditolak">0</b>
+                    <span>tidak ditindaklanjuti</span>
+                </article>
+            </section>
+
+            <section class="kartu">
+                <div class="kartu-head">
+                    <div>
+                        <b><i class="bi bi-headset"></i> Daftar Tiket</b>
+                        <small>Keluhan yang dikirim siswa dari halaman user</small>
+                    </div>
+                    <button type="button" class="btn btn--ghost btn--sm" id="ekspor-keluhan"><i class="bi bi-download"></i> Ekspor CSV</button>
+                </div>
+
+                <div class="toolbar">
+                    <label class="cari">
+                        <i class="bi bi-search"></i>
+                        <input id="cari" aria-label="Cari ID tiket, nama, atau NIPD" type="search" placeholder="Cari ID tiket, nama, atau NIPD...">
+                    </label>
+                    <select class="select" id="filter-kategori" aria-label="Filter kategori">
+                        <option value="">Semua Kategori</option>
+                        <option value="koneksi">Koneksi</option>
+                        <option value="kecepatan">Kecepatan</option>
+                        <option value="perangkat">Perangkat</option>
+                        <option value="akun">Akun</option>
+                        <option value="lain">Lainnya</option>
+                    </select>
+                    <select class="select" id="filter-status" aria-label="Filter status">
+                        <option value="">Semua Status</option>
+                        <option value="menunggu">Baru</option>
+                        <option value="diproses">Diproses</option>
+                        <option value="selesai">Selesai</option>
+                        <option value="ditolak">Ditolak</option>
+                    </select>
+                </div>
+
+                <div class="filter-tabs" id="tab-keluhan">
+                    <button type="button" class="tab aktif" data-status="">Semua <b>0</b></button>
+                    <button type="button" class="tab" data-status="menunggu">Baru <b>0</b></button>
+                    <button type="button" class="tab" data-status="diproses">Diproses <b>0</b></button>
+                    <button type="button" class="tab" data-status="selesai">Selesai <b>0</b></button>
+                    <button type="button" class="tab" data-status="ditolak">Ditolak <b>0</b></button>
+                </div>
+
+                <div class="tiket-grid" id="daftar-keluhan">
+                    <div class="kosong-admin">Memuat tiket…</div>
+                </div>
+
+                <div class="pagination">
+                    <span id="ringkas-keluhan">Memuat tiket…</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Navigasi bawah">
+        <a href="dashboard.html"><i class="bi bi-grid"></i><small>Dash</small></a>
+        <a href="siswa.html"><i class="bi bi-people"></i><small>Siswa</small></a>
+        <a href="monitoring.html"><i class="bi bi-hdd-network"></i><small>Net</small></a>
+        <a class="aktif" href="keluhan.html"><i class="bi bi-headset"></i><small>Help</small></a>
+        <a href="log.html"><i class="bi bi-clock-history"></i><small>Log</small></a>
+            <a href="pengaturan.html"><i class="bi bi-sliders"></i><small>Atur</small></a>
+    </nav>
+    <script src="src/scripts/admin-util.js"></script>
+    <script src="src/scripts/keluhan.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f7fc" />
+    <meta name="api-base" content="/api/">
+    <title>Data Siswa — Panel Admin</title>
+    <link rel="stylesheet" href="src/styles/admin.css?v=4">
+    <script src="../assets/js/api.js"></script>
+    <script src="src/scripts/auth-guard.js"></script>
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+</head>
+
+<body class="halaman-admin">
+    <div class="layout-admin">
+        <aside class="sidebar" aria-label="Navigasi admin">
+            <div class="brand">
+                <img src="../assets/images/logo_sekolah.png" alt="logo sekolah">
+                <div><b>Panel Admin</b><small>WIFI Terpadu</small></div>
+            </div>
+
+            <nav>
+                <a href="dashboard.html">
+                    <i class="bi bi-grid"></i><span>Dashboard</span>
+                </a>
+                <a class="aktif" href="siswa.html">
+                    <i class="bi bi-people"></i><span>Data Siswa</span><em id="nav-siswa">0</em>
+                </a>
+                <a href="monitoring.html">
+                    <i class="bi bi-hdd-network"></i><span>Monitoring</span>
+                </a>
+                <a href="keluhan.html">
+                    <i class="bi bi-headset"></i><span>Keluhan</span><em id="nav-keluhan">0</em>
+                </a>
+                <a href="log.html">
+                    <i class="bi bi-clock-history"></i><span>Log</span>
+                </a>
+                <a href="pengaturan.html">
+                    <i class="bi bi-sliders"></i><span>Pengaturan</span>
+                </a>
+            </nav>
+
+            <a class="keluar" href="index.html">
+                <i class="bi bi-box-arrow-right"></i><span>Keluar</span>
+            </a>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div class="topbar-kiri">
+                    <div>
+                        <h1>Data Siswa</h1>
+                        <small id="ringkas-siswa">Memuat data siswa…</small>
+                    </div>
+                </div>
+
+                <div class="top-aksi">
+                    <label class="cari">
+                        <i class="bi bi-search"></i>
+                        <input aria-label="Cari nama atau NIPD" type="search" placeholder="Cari nama atau NIPD...">
+                    </label>
+                    <button type="button" class="lonceng" aria-label="Notifikasi">
+                        <i class="bi bi-bell"></i><span id="lonceng-jumlah">0</span>
+                    </button>
+                    <div class="akun">
+                        <span class="avatar"><img src="../assets/images/logo_sekolah.png" alt="Logo Sekolah"></span>
+                        <div><b>Admin</b><small>Operator</small></div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="grid-stat" aria-label="Ringkasan siswa">
+                <article class="stat">
+                    <div class="stat-head">
+                        <span class="stat-ikon"><i class="bi bi-people"></i></span>
+                        <small>Total Siswa</small>
+                    </div>
+                    <b id="stat-total">0</b>
+                    <span>4 jurusan</span>
+                </article>
+
+                <article class="stat warn">
+                    <div class="stat-head">
+                        <span class="stat-ikon"><i class="bi bi-hourglass-split"></i></span>
+                        <small>Pending</small>
+                    </div>
+                    <b id="stat-pending">0</b>
+                    <span>perlu ditinjau</span>
+                </article>
+
+                <article class="stat ok">
+                    <div class="stat-head">
+                        <span class="stat-ikon"><i class="bi bi-wifi"></i></span>
+                        <small>Aktif</small>
+                    </div>
+                    <b id="stat-aktif">0</b>
+                    <span>akun aktif</span>
+                </article>
+
+                <article class="stat bad">
+                    <div class="stat-head">
+                        <span class="stat-ikon"><i class="bi bi-person-x"></i></span>
+                        <small>Ditolak</small>
+                    </div>
+                    <b id="stat-ditolak">0</b>
+                    <span>ditolak / diblokir</span>
+                </article>
+            </section>
+
+            <section class="banner-pending" id="banner-pending" hidden>
+                <div class="banner-pending-isi">
+                    <span class="banner-pending-ikon"><i class="bi bi-hourglass-split"></i></span>
+                    <div>
+                        <b id="banner-pending-teks">Ada pendaftar menunggu persetujuan</b>
+                        <small>Setujui akun agar siswa bisa masuk. Tombol Tolak dipakai bila data tidak valid.</small>
+                    </div>
+                </div>
+                <button type="button" class="btn btn--brand btn--sm" id="btn-lihat-pending">
+                    <i class="bi bi-funnel"></i> Lihat Pending
+                </button>
+            </section>
+
+            <section class="kartu">
+                <div class="kartu-head">
+                    <div>
+                        <b><i class="bi bi-table"></i> Daftar Siswa</b>
+                        <small>Kelola pendaftaran dan status akun siswa</small>
+                    </div>
+                    <span class="chip chip--blue" id="chip-jumlah">0 data</span>
+                </div>
+
+                <div class="toolbar">
+                    <label class="cari">
+                        <i class="bi bi-search"></i>
+                        <input id="cari-siswa" aria-label="Cari nama, NIPD, atau kelas" type="search" placeholder="Cari nama, NIPD, atau kelas...">
+                    </label>
+                    <select class="select" id="filter-jurusan" aria-label="Filter jurusan">
+                        <option value="">Semua Jurusan</option>
+                        <option value="TJKT">TJKT</option>
+                        <option value="TO">TO</option>
+                        <option value="DITF">DITF</option>
+                        <option value="KKBT">KKBT</option>
+                    </select>
+                    <select class="select" id="filter-status" aria-label="Filter status">
+                        <option value="">Semua Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="aktif">Aktif</option>
+                        <option value="ditolak">Ditolak</option>
+                        <option value="blokir">Diblokir</option>
+                    </select>
+                    <div class="toolbar-aksi">
+                        <button type="button" class="btn btn--brand" id="btn-tambah-siswa"><i class="bi bi-plus-lg"></i> Tambah Siswa</button>
+                    </div>
+                </div>
+
+                <div class="tabel-wrap">
+                    <table class="tabel">
+                        <thead>
+                            <tr>
+                                <th>Siswa</th>
+                                <th>NIPD</th>
+                                <th>Jurusan / Kelas</th>
+                                <th>Status</th>
+                                <th>Perangkat</th>
+                                <th>Terakhir Online</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-siswa">
+                            <tr><td colspan="7"><div class="kosong-admin">Memuat data siswa…</div></td></tr>
+                        
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <span id="ringkas-tabel">Menampilkan 0 siswa</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <nav class="bottom-nav" aria-label="Navigasi bawah">
+        <a href="dashboard.html"><i class="bi bi-grid"></i><small>Dash</small></a>
+        <a class="aktif" href="siswa.html"><i class="bi bi-people"></i><small>Siswa</small></a>
+        <a href="monitoring.html"><i class="bi bi-hdd-network"></i><small>Net</small></a>
+        <a href="keluhan.html"><i class="bi bi-headset"></i><small>Help</small></a>
+        <a href="log.html"><i class="bi bi-clock-history"></i><small>Log</small></a>
+        <a href="pengaturan.html"><i class="bi bi-sliders"></i><small>Atur</small></a>
+    </nav>
+    <script src="src/scripts/admin-util.js"></script>
+    <script src="src/scripts/siswa.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Masuk WiFi — SMK Negeri 1 Susukan</title>
+    <meta name="api-base" content="/api/">
+    <link rel="stylesheet" href="src/styles/main.css" />
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+    <script src="../assets/js/api.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="bg-pattern">
+            <i class="bi bi-gear"></i>
+            <i class="bi bi-cpu"></i>
+            <i class="bi bi-hdd-network"></i>
+            <i class="bi bi-laptop"></i>
+            <i class="bi bi-palette"></i>
+            <i class="bi bi-hammer"></i>
+            <i class="bi bi-flower1"></i>
+            <i class="bi bi-heart"></i>
+        </div>
+        <div class="logo">
+            <img src="../assets/images/logo_sekolah.png" alt="logo SMK Negeri 1 Susukan">
+        </div>
+        <h1>SMK Negeri 1 Susukan</h1>
+        <p class="subtitle">"Sistem Akses Wifi Siswa Terpadu"</p>
+        <div class="jurusan">
+            <span title="Teknik Ototronik"><i class="bi bi-gear"></i> TO</span>
+            <span title="Teknik Jaringan Komputer dan Telekomunikasi"><i class="bi bi-hdd-network"></i> TJKT</span>
+            <span title="Desain Interior dan Teknik Furnitur"><i class="bi bi-palette"></i> DITF</span>
+            <span title="Kriya Kreatif Batik dan Tekstil"><i class="bi bi-flower1"></i> KKBT</span>
+        </div>
+    </header>
+    <main class="kotak">
+        <section class="kartu">
+            <h2>Masuk Ulang WI-FI</h2>
+            <aside class="pengumuman">
+                <h3>Sudah Terdaftar?</h3>
+                <ul>
+                    <li>Masukkan NIPD dan kata sandi yang dibuat saat daftar.</li>
+                </ul>
+            </aside>
+            <form action="#" method="post" id="form-masuk">
+                <div id="login-alert" class="notif" hidden></div>
+                <label for="nipd">NIPD / ID Pengguna</label>
+                <input type="text" name="nipd" id="nipd" placeholder="Contoh: 1234" autocomplete="username" required>
+
+                <label for="sandi">Kata Sandi</label>
+                <div class="pw-wrap">
+                    <input type="password" id="sandi" name="sandi" placeholder="Kata Sandi Kamu..." required
+                        autocomplete="current-password">
+                    <button type="button" id="lihat-sandi"><i class="bi bi-eye"></i></button>
+                </div>
+                <button type="submit">Masuk</button>
+            </form>
+            <p style="text-align:center;margin-top: 12px; font-size: 13px;">Belum Punya Akun? <a
+                    href="daftar.html">Daftar</a></p>
+            <p style="text-align:center;margin-top: 6px; font-size: 12px; color: #6a7a94;">Lupa kata sandi?
+                Hubungi admin/Tim IT sekolah untuk direset.</p>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2026 Tim IT Sekolah Amar & Noval izin hehe</p>
+    </footer>
+    <div class="bantuan-float">
+        <button id="bantuan" title="Bantuan"><i class="bi bi-question-circle"></i></button>
+        <a class="operator-float" href="keluhan.html" title="Chat Operator"><i class="bi bi-headset"></i></a>
+    </div>
+    <div id="bantuan-box" hidden>
+        <div class="bantuan-head">
+            <b>Butuh bantuan?</b>
+            <button id="tutup-bantuan" class="tutup-bantuan" title="Tutup" aria-label="Tutup bantuan"><i
+                    class="bi bi-x-lg"></i></button>
+        </div>
+        <ol class="panduan">
+            <li>Masukkan NIPD yang terdaftar.</li>
+            <li>Ketik kata sandi yang dibuat saat daftar.</li>
+            <li>Klik <b>Cek & Sambungkan Ulang</b>.</li>
+        </ol>
+    </div>
+    <script src="src/scripts/main.js"></script>
+    <script src="src/scripts/login.js"></script>
+</body>
+
+</html>

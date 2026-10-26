@@ -1,0 +1,68 @@
+# Blueprint Render — Render + Aiven MySQL (data permanen, tanpa kartu).
+#
+# Sebelum deploy:
+#   1. Daftar https://aiven.io (tanpa kartu).
+#   2. Create service -> MySQL -> Free plan. Tunggu status Running.
+#   3. Buka service -> Connection information, catat Host, Port, User, Password.
+#   4. Buka tab Allowed IP / IP allowlist -> tambahkan 0.0.0.0/0.
+#   5. Database yang dipakai: defaultdb (sudah disediakan Aiven).
+#
+# Saat membuat Blueprint, Render akan menanyakan 4 nilai rahasia:
+#   DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD
+#
+# Link akhir: https://<name>.onrender.com
+
+services:
+  - type: web
+    name: wifi-smkn1-susukan
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_TIMEZONE
+        value: Asia/Jakarta
+      - key: HOST
+        value: 0.0.0.0
+      - key: SERVE_STATIC
+        value: "true"
+      - key: TRUST_PROXY
+        value: "true"
+
+      - key: DB_DRIVER
+        value: mysql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_DATABASE
+        value: defaultdb
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      # Koneksi tetap terenkripsi TLS; verifikasi CA dilewati supaya
+      # sertifikat Aiven tidak perlu diunduh manual.
+      - key: DB_SSL
+        value: "true"
+      - key: DB_SSL_INSECURE
+        value: "true"
+
+      - key: SESSION_NAME
+        value: WIFI_SESSID
+      - key: SESSION_LIFETIME
+        value: "7200"
+      - key: LOGIN_MAX_ATTEMPTS
+        value: "5"
+      - key: LOGIN_WINDOW_MINUTES
+        value: "15"
+
+      - key: NETWORK_SOURCE
+        value: simulasi
